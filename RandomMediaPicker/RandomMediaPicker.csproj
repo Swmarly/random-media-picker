@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
+    <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
+    <RootNamespace>RandomMediaPicker</RootNamespace>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <Platforms>x64</Platforms>
+    <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
+    <UseWinUI>true</UseWinUI>
+    <EnableMsixTooling>true</EnableMsixTooling>
+    <WindowsPackageType>MSIX</WindowsPackageType>
+    <AppxPackageSigningEnabled>false</AppxPackageSigningEnabled>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="2.2.0" />
+  </ItemGroup>
+  <ItemGroup><ProjectReference Include="..\RandomMediaPicker.Core\RandomMediaPicker.Core.csproj" /></ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\StoreLogo.png" />
+    <Content Include="Assets\Square150x150Logo.png" />
+    <Content Include="Assets\Square44x44Logo.png" />
+  </ItemGroup>
+  <Target Name="GeneratePackageLogos" BeforeTargets="BeforeBuild">
+    <MakeDir Directories="Assets" />
+    <PropertyGroup>
+      <LogoPngBase64>iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+/p9sAAAAASUVORK5CYII=</LogoPngBase64>
+      <LogoScript>$b=[Convert]::FromBase64String('$(LogoPngBase64)'); [IO.File]::WriteAllBytes('$(MSBuildProjectDirectory)\Assets\StoreLogo.png',$b); [IO.File]::WriteAllBytes('$(MSBuildProjectDirectory)\Assets\Square150x150Logo.png',$b); [IO.File]::WriteAllBytes('$(MSBuildProjectDirectory)\Assets\Square44x44Logo.png',$b)</LogoScript>
+    </PropertyGroup>
+    <Exec Command="powershell -NoProfile -ExecutionPolicy Bypass -Command &quot;$(LogoScript)&quot;" />
+  </Target>
+</Project>

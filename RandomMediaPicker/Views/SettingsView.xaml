@@ -1,0 +1,12 @@
+<UserControl x:Class="RandomMediaPicker.Views.SettingsView" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<ScrollViewer MaxHeight="620"><StackPanel Spacing="12" Width="560">
+  <ComboBox x:Name="OpeningModeBox" Header="Opening mode"><ComboBoxItem Content="Internal viewer"/><ComboBoxItem Content="Windows default application"/></ComboBox>
+  <CheckBox x:Name="IncludeSubfoldersBox" Content="Include subfolders"/><CheckBox x:Name="IncludeImagesBox" Content="Include images"/><CheckBox x:Name="IncludeVideosBox" Content="Include videos"/>
+  <TextBox x:Name="ImageExtensionsBox" Header="Image extensions" AcceptsReturn="True" TextWrapping="Wrap"/>
+  <TextBox x:Name="VideoExtensionsBox" Header="Video extensions" AcceptsReturn="True" TextWrapping="Wrap"/>
+  <CheckBox x:Name="RememberFolderBox" Content="Remember last selected folder"/><CheckBox x:Name="AvoidRepeatBox" Content="Avoid immediately repeating previous file"/><CheckBox x:Name="AvoidRecentBox" Content="Avoid recently opened files"/>
+  <NumberBox x:Name="HistorySizeBox" Header="Recent-history size" Minimum="1" Maximum="500" SmallChange="1" LargeChange="10" SpinButtonPlacementMode="Inline"/>
+  <Button Content="Clear recent history" Click="ClearHistory_Click"/>
+  <InfoBar x:Name="WarningBar" IsOpen="False" Severity="Warning" Title="Invalid combination" Message="Images and videos are both disabled; enable at least one before scanning."/>
+</StackPanel></ScrollViewer>
+</UserControl>
