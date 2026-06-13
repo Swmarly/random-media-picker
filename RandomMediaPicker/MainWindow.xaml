@@ -1,0 +1,28 @@
+<Window x:Class="RandomMediaPicker.MainWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="using:RandomMediaPicker">
+<Grid Padding="20" RowSpacing="12">
+  <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+  <StackPanel Spacing="12">
+    <TextBlock Text="Random Media Picker" Style="{StaticResource TitleTextBlockStyle}"/>
+    <Grid ColumnSpacing="8"><Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+      <TextBox x:Name="FolderPathBox" Header="Current folder" PlaceholderText="Choose a folder" IsReadOnly="True" AutomationProperties.Name="Current folder path"/>
+      <Button Grid.Column="1" Content="Browse…" Click="Browse_Click" ToolTipService.ToolTip="Choose a media folder"/>
+      <Button Grid.Column="2" Content="Add favorite" Click="AddFavorite_Click"/>
+    </Grid>
+    <Grid ColumnSpacing="8"><Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/><ColumnDefinition Width="Auto"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+      <ComboBox x:Name="FavoritesBox" Header="Favorite folders" DisplayMemberPath="DisplayName" SelectionChanged="FavoritesBox_SelectionChanged"/>
+      <Button Grid.Column="1" Content="Rename" Click="RenameFavorite_Click"/>
+      <Button Grid.Column="2" Content="Remove" Click="RemoveFavorite_Click"/>
+      <Button Grid.Column="3" Content="Settings" Click="Settings_Click"/>
+    </Grid>
+    <StackPanel Orientation="Horizontal" Spacing="8"><Button x:Name="OpenButton" Content="Open Random Media" Click="OpenRandom_Click" Style="{StaticResource AccentButtonStyle}"/><Button Content="Rescan folder" Click="Rescan_Click" ToolTipService.ToolTip="Clear the cached media index and scan the folder again"/><Button x:Name="CancelButton" Content="Cancel scan" Click="Cancel_Click" IsEnabled="False"/><ProgressRing x:Name="BusyRing" IsActive="False" Width="32" Height="32"/><TextBlock x:Name="ProgressText" VerticalAlignment="Center"/></StackPanel>
+  </StackPanel>
+  <InfoBar x:Name="StatusBar" Grid.Row="1" IsOpen="True" Severity="Informational" Title="Ready" Message="Choose a folder, then open a random image or video."/>
+  <Border Grid.Row="2" Background="{ThemeResource CardBackgroundFillColorDefaultBrush}" CornerRadius="8" Padding="12"><Grid>
+    <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+    <TextBlock x:Name="MediaTitle" FontSize="18" FontWeight="SemiBold" Text="No media selected" TextTrimming="CharacterEllipsis"/>
+    <Grid Grid.Row="1"><Image x:Name="ImageViewer" Stretch="Uniform" Visibility="Collapsed"/><MediaPlayerElement x:Name="VideoViewer" AreTransportControlsEnabled="True" Stretch="Uniform" Visibility="Collapsed"/></Grid>
+    <StackPanel Grid.Row="2" Spacing="8"><TextBlock x:Name="MediaPathText" TextWrapping="Wrap"/><StackPanel Orientation="Horizontal" Spacing="8"><Button Content="Reveal in File Explorer" Click="Reveal_Click"/><Button Content="Open with default app" Click="OpenExternal_Click"/></StackPanel></StackPanel>
+  </Grid></Border>
+  <TextBlock Grid.Row="3" Text="Uses Windows codecs and file associations. Hidden/system temp files and directory reparse points are skipped during scans." TextWrapping="Wrap" Opacity="0.7"/>
+</Grid>
+</Window>
