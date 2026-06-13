@@ -1,3 +1,39 @@
 <Application x:Class="RandomMediaPicker.App" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-  <Application.Resources><XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" /></Application.Resources>
+  <Application.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
+      </ResourceDictionary.MergedDictionaries>
+
+      <Color x:Key="AppSurfaceColor">#FF0B1020</Color>
+      <Color x:Key="AppSurfaceAltColor">#FF111827</Color>
+      <Color x:Key="AppCardColor">#CC172033</Color>
+      <Color x:Key="AppCardStrokeColor">#33FFFFFF</Color>
+      <Color x:Key="AppAccentColor">#FF7C3AED</Color>
+      <Color x:Key="AppAccentAltColor">#FF06B6D4</Color>
+      <Color x:Key="AppTextMutedColor">#FFA8B3C7</Color>
+
+      <SolidColorBrush x:Key="AppSurfaceBrush" Color="{StaticResource AppSurfaceColor}" />
+      <SolidColorBrush x:Key="AppSurfaceAltBrush" Color="{StaticResource AppSurfaceAltColor}" />
+      <SolidColorBrush x:Key="AppCardBrush" Color="{StaticResource AppCardColor}" />
+      <SolidColorBrush x:Key="AppCardStrokeBrush" Color="{StaticResource AppCardStrokeColor}" />
+      <SolidColorBrush x:Key="AppAccentBrush" Color="{StaticResource AppAccentColor}" />
+      <SolidColorBrush x:Key="AppAccentAltBrush" Color="{StaticResource AppAccentAltColor}" />
+      <SolidColorBrush x:Key="AppTextMutedBrush" Color="{StaticResource AppTextMutedColor}" />
+
+      <LinearGradientBrush x:Key="AppBackdropBrush" StartPoint="0,0" EndPoint="1,1">
+        <GradientStop Color="#FF090E1A" Offset="0" />
+        <GradientStop Color="#FF121A2D" Offset="0.48" />
+        <GradientStop Color="#FF221135" Offset="1" />
+      </LinearGradientBrush>
+
+      <Style x:Key="SectionCardStyle" TargetType="Border">
+        <Setter Property="Background" Value="{StaticResource AppCardBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource AppCardStrokeBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="20" />
+        <Setter Property="Padding" Value="18" />
+      </Style>
+    </ResourceDictionary>
+  </Application.Resources>
 </Application>

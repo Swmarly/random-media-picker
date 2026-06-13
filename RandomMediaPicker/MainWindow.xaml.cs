@@ -1,7 +1,9 @@
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Imaging;
+using Microsoft.UI;
 using Microsoft.UI.Windowing;
+using Microsoft.UI.Xaml.Media;
 using RandomMediaPicker.Core.Models;
 using RandomMediaPicker.Core.Persistence;
 using RandomMediaPicker.Core.Services;
@@ -25,8 +27,27 @@ public sealed partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
+        SystemBackdrop = new MicaBackdrop();
+        ConfigureTitleBar();
         _store = new JsonStateStore(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "RandomMediaPicker", "state.json"));
         _ = LoadAsync(); Closed += async (_, _) => await SaveAsync();
+    }
+
+    private void ConfigureTitleBar()
+    {
+        var titleBar = AppWindow.TitleBar;
+        titleBar.BackgroundColor = ColorHelper.FromArgb(255, 11, 16, 32);
+        titleBar.ForegroundColor = Colors.White;
+        titleBar.InactiveBackgroundColor = ColorHelper.FromArgb(255, 17, 24, 39);
+        titleBar.InactiveForegroundColor = ColorHelper.FromArgb(255, 168, 179, 199);
+        titleBar.ButtonBackgroundColor = ColorHelper.FromArgb(255, 11, 16, 32);
+        titleBar.ButtonForegroundColor = Colors.White;
+        titleBar.ButtonHoverBackgroundColor = ColorHelper.FromArgb(255, 30, 41, 59);
+        titleBar.ButtonHoverForegroundColor = Colors.White;
+        titleBar.ButtonPressedBackgroundColor = ColorHelper.FromArgb(255, 124, 58, 237);
+        titleBar.ButtonPressedForegroundColor = Colors.White;
+        titleBar.ButtonInactiveBackgroundColor = ColorHelper.FromArgb(255, 17, 24, 39);
+        titleBar.ButtonInactiveForegroundColor = ColorHelper.FromArgb(255, 168, 179, 199);
     }
     private async Task LoadAsync()
     {
@@ -104,12 +125,12 @@ public sealed partial class MainWindow : Window
     private async void RenameFavorite_Click(object sender, RoutedEventArgs e)
     {
         if (FavoritesBox.SelectedItem is not FavoriteFolder f) return; var box = new TextBox { Text = f.DisplayName, Header = "Favorite display name" };
-        var dialog = new ContentDialog { Title = "Rename favorite", Content = box, PrimaryButtonText = "Save", CloseButtonText = "Cancel", XamlRoot = Content.XamlRoot };
+        var dialog = new ContentDialog { Title = "Rename favorite", Content = box, PrimaryButtonText = "Save", CloseButtonText = "Cancel", XamlRoot = Content.XamlRoot, RequestedTheme = ElementTheme.Dark };
         if (await dialog.ShowAsync() == ContentDialogResult.Primary && !string.IsNullOrWhiteSpace(box.Text)) { f.DisplayName = box.Text.Trim(); FavoritesBox.ItemsSource = null; FavoritesBox.ItemsSource = _favorites.Favorites; await SaveAsync(); }
     }
     private async void Settings_Click(object sender, RoutedEventArgs e)
     {
-        var panel = new Views.SettingsView(_settings, _history); var dialog = new ContentDialog { Title = "Settings", Content = panel, PrimaryButtonText = "Save", CloseButtonText = "Cancel", XamlRoot = Content.XamlRoot };
+        var panel = new Views.SettingsView(_settings, _history); var dialog = new ContentDialog { Title = "Settings", Content = panel, PrimaryButtonText = "Save", CloseButtonText = "Cancel", XamlRoot = Content.XamlRoot, RequestedTheme = ElementTheme.Dark };
         if (await dialog.ShowAsync() == ContentDialogResult.Primary) { panel.Apply(); _cache.Invalidate(); await SaveAsync(); }
     }
     private async void Reveal_Click(object sender, RoutedEventArgs e) { if (_currentMedia is not null && !await _shell.RevealAsync(_currentMedia)) Show("Reveal failed", "File Explorer could not reveal this file.", InfoBarSeverity.Error); }
